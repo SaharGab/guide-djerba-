@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "168430217962",
+    "project_id": "guide-djerba",
+    "storage_bucket": "guide-djerba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168430217962:android:fa2893b97830a5a8c18593",
+        "android_client_info": {
+          "package_name": "com.example.projet_pfe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw8FKaHnTt_JMrh3mW909I1_EytxLfFi0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
