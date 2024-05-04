@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:projet_pfe/models/touristSites.dart';
+import 'package:projet_pfe/screens/accommodationsection.dart';
+import 'package:projet_pfe/screens/detailscaferestau.dart';
+import 'package:projet_pfe/screens/homepage.dart';
+import 'package:projet_pfe/screens/seeplan.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -8,15 +14,8 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  final List<String> categories = [
-    'All categories',
-    'Hotels',
-    'Restaurants',
-    'Places',
-    'Bars',
-  ];
-  final List<Map<String, String>> recentSearches = [];
-  final List<Map<String, String>> trendingSearches = [];
+  List<TouristSite> searchResults = [];
+  String selectedCategory = 'All categories';
 
   @override
   void initState() {
@@ -25,8 +24,9 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void _onSearchChanged() {
-    // Mise à jour de l'interface utilisateur à chaque changement de texte
-    setState(() {});
+    if (_searchController.text.isNotEmpty) {
+      search(_searchController.text);
+    }
   }
 
   @override
@@ -36,10 +36,74 @@ class _SearchPageState extends State<SearchPage> {
     super.dispose();
   }
 
+  void search(String query) async {
+    query = query.toLowerCase(); // Convert the query to lower case
+    var collection = FirebaseFirestore.instance.collection('touristSites');
+    try {
+      QuerySnapshot querySnapshot;
+      if (selectedCategory == 'All categories') {
+        querySnapshot = await collection.get();
+      } else {
+        querySnapshot = await collection
+            .where('category', isEqualTo: selectedCategory)
+            .get();
+      }
+      List<TouristSite> sites = querySnapshot.docs
+          .map((doc) => TouristSite.fromFirestore(doc))
+          .where((site) {
+        // Assumes 'name' is a direct field of TouristSite
+        return site.name.toLowerCase().contains(query);
+      }).toList();
+
+      setState(() {
+        searchResults = sites;
+      });
+    } catch (e) {
+      debugPrint('Error searching Firestore: $e');
+    }
+  }
+
+  Widget buildChips() {
+    List<String> categories = [
+      'All categories',
+      'Accommodation',
+      'Cafe & Restaurant',
+      'Activities',
+      'To Explore'
+    ];
+    return Container(
+      height: 50, // Hauteur fixe pour le conteneur
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: 4), // Espacement entre les chips
+            child: ChoiceChip(
+              label: Text(categories[index]),
+              selected: selectedCategory == categories[index],
+              onSelected: (bool selected) {
+                setState(() {
+                  selectedCategory = categories[index];
+                  search(_searchController
+                      .text); // Met à jour la recherche en fonction de la catégorie
+                });
+              },
+              backgroundColor: Colors.grey[200],
+              selectedColor: Color.fromARGB(255, 18, 120, 171),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           'Search',
           style: TextStyle(
@@ -47,14 +111,21 @@ class _SearchPageState extends State<SearchPage> {
             fontSize: 24,
           ),
         ),
-        backgroundColor: Colors.white,
-        elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.clear),
+            onPressed: () {
+              _searchController.clear();
+              search('');
+            },
+          ),
+        ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: ListView(
-          children: <Widget>[
-            TextField(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
               focusNode: _focusNode,
               controller: _searchController,
               decoration: InputDecoration(
@@ -62,7 +133,7 @@ class _SearchPageState extends State<SearchPage> {
                     _searchController.text.isEmpty && !_focusNode.hasFocus
                         ? 'Search for hotels, places, bars...'
                         : '',
-                prefixIcon: Icon(Icons.search),
+                suffixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide.none,
@@ -70,52 +141,80 @@ class _SearchPageState extends State<SearchPage> {
                 filled: true,
                 fillColor: Colors.grey[200],
               ),
+              onChanged: (value) => _onSearchChanged(),
             ),
-            SizedBox(height: 20),
-            // Widget pour les catégories avec SingleChildScrollView
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: categories
-                    .map((category) => Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4),
-                          child: ElevatedButton(
-                            child: Text(category),
-                            onPressed: () {
-                              // Ajoutez votre logique de filtre ici
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey[200], // background
-                              foregroundColor: Colors.black, // foreground
+          ),
+          buildChips(),
+          Expanded(
+            child: ListView.builder(
+              itemCount: searchResults.length,
+              itemBuilder: (context, index) {
+                TouristSite site = searchResults[
+                    index]; // Assurez-vous que searchResults contient des objets TouristSite
+                return Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  elevation: 4,
+                  margin: EdgeInsets.all(8),
+                  child: ListTile(
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    leading: site.imageUrls.isNotEmpty
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              site.imageUrls.first,
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(Icons
+                                    .error); // Shows an error icon if the image fails to load
+                              },
                             ),
-                          ),
-                        ))
-                    .toList(),
-              ),
+                          )
+                        : SizedBox(
+                            width: 50, height: 50), // Empty box if no image URL
+                    title: Text(
+                      site.name,
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      site.description,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          switch (site.category) {
+                            case 'Accommodation':
+                              return DetailsScreen(accommodation: site);
+                            case 'Cafe & Restaurant':
+                              return CafeDetailScreen(cafe: site);
+                            case 'Activities':
+                              return SeePlan(activity: site);
+                            case 'To Explore':
+                              return PlaceDetailsScreen(place: site);
+                            default:
+                              return Scaffold(
+                                  body: Center(
+                                      child: Text(
+                                          'No page found for this category')));
+                          }
+                        }),
+                      );
+                    },
+                  ),
+                );
+              },
             ),
-            SizedBox(height: 20),
-            // Vérifier si les listes de recherches récentes et tendances contiennent des éléments
-            if (recentSearches.isNotEmpty)
-              ...buildSearchList('Recent searches', recentSearches),
-            if (trendingSearches.isNotEmpty)
-              ...buildSearchList('Trending searches', trendingSearches),
-          ],
-        ),
+          ),
+        ],
       ),
     );
-  }
-
-  List<Widget> buildSearchList(
-      String title, List<Map<String, String>> searches) {
-    return [
-      Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-      ...searches
-          .map((search) => ListTile(
-                leading: Icon(Icons.history),
-                title: Text(search['title']!),
-                subtitle: Text(search['subtitle']!),
-              ))
-          .toList(),
-    ];
   }
 }
