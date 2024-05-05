@@ -216,10 +216,32 @@ class _SeePlanState extends State<SeePlan> {
                   Column(
                     children: [
                       CommentButton(onTap: showCommentDialog),
-                      Text(
-                        '0',
-                        style: const TextStyle(color: Colors.grey),
-                      )
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection("touristSites")
+                            .doc(widget.activity.id)
+                            .collection("Comments")
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            // Display the count of documents in the Comments collection
+                            return Text(
+                              '${snapshot.data!.docs.length}', // Dynamically display the count
+                              style: const TextStyle(color: Colors.grey),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text(
+                              'Error', // Error handling if the stream throws an error
+                              style: const TextStyle(color: Colors.red),
+                            );
+                          }
+                          // Display loading or default text if the snapshot is still loading
+                          return Text(
+                            'Loading...',
+                            style: const TextStyle(color: Colors.grey),
+                          );
+                        },
+                      ),
                     ],
                     //comment count
                   ),

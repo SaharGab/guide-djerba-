@@ -26,7 +26,7 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
 
   // add a comment
   void addComment(String commentText) {
-    final email = FirebaseAuth.instance.currentUser!.email;
+    final currentUser = FirebaseAuth.instance.currentUser!;
     // write the comment to firestore under the comments collection for this post
     FirebaseFirestore.instance
         .collection("touristSites")
@@ -34,7 +34,7 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
         .collection("Comments")
         .add({
       "CommentText": commentText,
-      "CommentedBy": email,
+      "CommentedBy": currentUser.email,
       "CommentTime": Timestamp.now(),
     });
   }
@@ -214,10 +214,32 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
                   Column(
                     children: [
                       CommentButton(onTap: showCommentDialog),
-                      Text(
-                        '0',
-                        style: const TextStyle(color: Colors.grey),
-                      )
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection("touristSites")
+                            .doc(widget.cafe.id)
+                            .collection("Comments")
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            // Display the count of documents in the Comments collection
+                            return Text(
+                              '${snapshot.data!.docs.length}', // Dynamically display the count
+                              style: const TextStyle(color: Colors.grey),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text(
+                              'Error', // Error handling if the stream throws an error
+                              style: const TextStyle(color: Colors.red),
+                            );
+                          }
+                          // Display loading or default text if the snapshot is still loading
+                          return Text(
+                            'Loading...',
+                            style: const TextStyle(color: Colors.grey),
+                          );
+                        },
+                      ),
                     ],
                     //comment count
                   ),
@@ -245,10 +267,8 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
                                 doc.data() as Map<String, dynamic>;
                             // return the comment
                             return Comment(
-                              text: commentData["CommentText"] ??
-                                  "Texte non disponible",
-                              user: commentData["CommentedBy"] ??
-                                  "utilisateur anonyme ",
+                              text: commentData["CommentText"],
+                              user: commentData["CommentedBy"],
                               time: formatDate(commentData["CommentTime"]),
                             );
                           }).toList(),

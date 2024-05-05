@@ -5,7 +5,11 @@ class DatabaseService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Stream<List<DataModel>> getEvents() {
-    return _db.collection('events').snapshots().map((snapshot) {
+    return _db
+        .collection('events')
+        .orderBy('startDate', descending: true)
+        .snapshots()
+        .map((snapshot) {
       return snapshot.docs
           .map((doc) {
             try {

@@ -15,6 +15,14 @@ class _SignupState extends State<Signup> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _fullnameTextController = TextEditingController();
+  void showSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,50 +135,74 @@ class _SignupState extends State<Signup> {
                 Padding(
                   padding: const EdgeInsets.only(top: 25),
                   child: Container(
-                    alignment: Alignment.center,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        String fullname = _fullnameTextController.text;
-                        String email = _emailTextController.text;
-                        String password = _passwordTextController.text;
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          String fullname = _fullnameTextController.text.trim();
+                          String email = _emailTextController.text.trim();
+                          String password = _passwordTextController.text.trim();
 
-                        User user = User(
-                          fullname: fullname,
-                          email: email,
-                          password: password,
-                        );
-                        await user.registerUser(user.email, user.password);
+                          // Validation for empty fields
+                          if (fullname.isEmpty ||
+                              email.isEmpty ||
+                              password.isEmpty) {
+                            showSnackbar("Please fill in all fields.");
+                            return;
+                          }
 
-                        Navigator.push(
-                          (context),
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return RoleSelectionScreen();
-                            },
+                          // Validation for a valid email
+                          if (!RegExp(r'\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b')
+                              .hasMatch(email)) {
+                            showSnackbar("Please enter a valid email address.");
+                            return;
+                          }
+
+                          // Validation for password length
+                          if (password.length < 6) {
+                            showSnackbar(
+                                "Password must be at least 6 characters long.");
+                            return;
+                          }
+
+                          try {
+                            User user = User(
+                              fullname: fullname,
+                              email: email,
+                              password: password,
+                            );
+                            await user.registerUser(email, password);
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RoleSelectionScreen(),
+                              ),
+                            );
+                          } catch (e) {
+                            showSnackbar(
+                                "Failed to create account: ${e.toString()}");
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(195, 18, 120, 171),
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(195, 18, 120, 171),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Create Account  ",
-                          style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 21,
-                              fontWeight: FontWeight.w500,
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Create Account",
+                            style: GoogleFonts.montserrat(
+                              textStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 21,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
+                          width: 260,
+                          height: 55,
                         ),
-                        width: 260,
-                        height: 55,
-                      ),
-                    ),
-                  ),
+                      )),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),

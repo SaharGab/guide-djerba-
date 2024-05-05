@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:projet_pfe/firebase_options.dart';
+import 'package:projet_pfe/screens/event_details_screen.dart';
 import 'package:projet_pfe/splash.dart';
 import 'dart:async';
 
@@ -10,6 +11,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await EventUtils.deleteExpiredEvents();
 
   runApp(const MyApp());
 }

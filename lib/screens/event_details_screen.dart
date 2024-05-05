@@ -48,7 +48,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    deleteExpiredEvents(); // Nettoie les événements expirés à chaque démarrage
+    // Nettoie les événements expirés à chaque démarrage
   }
 
   @override
@@ -146,21 +146,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> deleteExpiredEvents() async {
-    final now = Timestamp.now();
-    final eventsRef = FirebaseFirestore.instance.collection('events');
-    print('Running deleteExpiredEvents...'); // Log pour suivre le processus
-    final querySnapshot =
-        await eventsRef.where('endDate', isLessThanOrEqualTo: now).get();
-    print(
-        'Found ${querySnapshot.docs.length} expired events'); // Nombre d'événements expirés
-
-    for (var doc in querySnapshot.docs) {
-      await doc.reference.delete();
-      print('Deleted event with ID: ${doc.id}'); // Log pour chaque suppression
-    }
   }
 
   Future<void> _pickDate(BuildContext context, bool isStart) async {
@@ -279,5 +264,18 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Failed to add event: $error')));
     });
+  }
+}
+
+class EventUtils {
+  static Future<void> deleteExpiredEvents() async {
+    final now = Timestamp.now();
+    final eventsRef = FirebaseFirestore.instance.collection('events');
+    final querySnapshot =
+        await eventsRef.where('endDate', isLessThanOrEqualTo: now).get();
+
+    for (var doc in querySnapshot.docs) {
+      await doc.reference.delete();
+    }
   }
 }
