@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
@@ -67,7 +68,7 @@ class _EventEditScreenState extends State<EventEditScreen> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.h.w),
           children: [
             TextFormField(
               controller: titleController,
@@ -111,17 +112,18 @@ class _EventEditScreenState extends State<EventEditScreen> {
               child: _image == null
                   ? (imageUrl == null
                       ? Container(
-                          height: 150,
+                          height: 150.h,
                           width: double.infinity,
                           color: Colors.grey[300],
                           child: Icon(Icons.camera_alt,
-                              color: Colors.white70, size: 50),
+                              color: Colors.white70, size: 50.h.w),
                         )
                       : Image.network(imageUrl!,
-                          height: 200,
+                          height: 200.h,
                           fit: BoxFit.cover)) // Affiche l'image à partir d'URL
                   : Image.file(_image!,
-                      height: 200, fit: BoxFit.cover), // Affiche l'image locale
+                      height: 200.h,
+                      fit: BoxFit.cover), // Affiche l'image locale
             ),
 
             // Repeat similar text fields for other event attributes

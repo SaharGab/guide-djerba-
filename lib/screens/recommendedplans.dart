@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:projet_pfe/models/touristSites.dart';
@@ -59,8 +60,8 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
 
   Widget _buildActivityBox(TouristSite activity) {
     return Container(
-      height: 210,
-      margin: EdgeInsets.all(15),
+      height: 210.h,
+      margin: EdgeInsets.all(15.h.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         image: DecorationImage(
@@ -73,15 +74,15 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10.h.w),
             child: Align(
               alignment: Alignment.topRight,
               child: IconButton(
                 icon: Image.asset(
                   'icons/heart 1.png',
                   color: Colors.white,
-                  width: 25,
-                  height: 30,
+                  width: 25.w,
+                  height: 30.h,
                 ),
                 onPressed: () {
                   // Handle favorite button tap
@@ -90,7 +91,7 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10.h.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,25 +102,25 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
                     activity.name,
                     style: GoogleFonts.montserrat(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: Text(
                     activity.description,
                     style: GoogleFonts.montserrat(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: 16.sp,
                     ),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 Align(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(

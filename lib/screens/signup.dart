@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projet_pfe/screens/screens.dart';
 import 'package:projet_pfe/widgets/reusable_widgets.dart';
@@ -45,14 +46,14 @@ class _SignupState extends State<Signup> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 20),
+                  padding: EdgeInsets.only(top: 20.h, left: 20.w),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Color.fromARGB(146, 71, 71, 71),
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    height: 40,
-                    width: 40,
+                    height: 45.h,
+                    width: 45.w,
                     child: IconButton(
                       onPressed: () {
                         Navigator.pushReplacement(
@@ -70,119 +71,128 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 40.h,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 25, left: 25),
+                Align(
+                  alignment: Alignment.center,
                   child: Text(
-                    "Wander Mate  ",
+                    "Wander Mate",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.roboto(
-                      fontSize: 50,
+                      fontSize: 50.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 65),
+                SizedBox(
+                  height: 25.h,
+                ),
+                Align(
+                  alignment: Alignment.center,
                   child: Text(
                     "Welcome Back! ",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.roboto(
-                      fontSize: 36,
+                      fontSize: 36.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 90, bottom: 25),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Align(
+                  alignment: Alignment.center,
                   child: Text(
                     "Create your account ",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.inter(
-                      fontSize: 22,
+                      fontSize: 22.sp,
                       color: Colors.white,
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 25.h,
+                ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Column(
                     children: [
                       buildTextField("Full Name", false,
                           _fullnameTextController, Icons.person_2_outlined),
-                      SizedBox(height: 15),
+                      SizedBox(height: 15.h),
                       buildTextField("Email", false, _emailTextController,
                           Icons.email_outlined),
                       SizedBox(
-                        height: 15,
+                        height: 15.h,
                       ),
                       buildTextField("Password", true, _passwordTextController,
                           Icons.lock),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 25),
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        String fullname = _fullnameTextController.text;
-                        String email = _emailTextController.text;
-                        String password = _passwordTextController.text;
+                SizedBox(
+                  height: 25.h,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      String fullname = _fullnameTextController.text;
+                      String email = _emailTextController.text;
+                      String password = _passwordTextController.text;
 
-                        User user = User(
-                          fullname: fullname,
-                          email: email,
-                          password: password,
-                        );
-                        await user.registerUser(user.email, user.password);
+                      User user = User(
+                        fullname: fullname,
+                        email: email,
+                        password: password,
+                      );
+                      await user.registerUser(user.email, user.password);
 
-                        Navigator.push(
-                          (context),
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return RoleSelectionScreen();
-                            },
-                          ),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(195, 18, 120, 171),
-                          borderRadius: BorderRadius.circular(20),
+                      Navigator.push(
+                        (context),
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return RoleSelectionScreen();
+                          },
                         ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Create Account  ",
-                          style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 21,
-                              fontWeight: FontWeight.w500,
-                            ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(195, 18, 120, 171),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      alignment: Alignment.center,
+                      width: 260.w,
+                      height: 55.h,
+                      child: Text(
+                        "Create Account",
+                        style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 21.sp,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                        width: 260,
-                        height: 55,
                       ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  padding: EdgeInsets.symmetric(horizontal: 25.w),
                   child: Row(
                     children: [
                       Container(
-                        padding: EdgeInsets.only(top: 20),
+                        padding: EdgeInsets.only(top: 20.h),
                         child: Text(
                           "Already have an account ? ",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(
-                            fontSize: 20,
+                            fontSize: 20.sp,
                             fontWeight: FontWeight.w300,
                             color: Colors.white,
                           ),
@@ -200,12 +210,12 @@ class _SignupState extends State<Signup> {
                           );
                         },
                         child: Container(
-                          padding: EdgeInsets.only(top: 20),
+                          padding: EdgeInsets.only(top: 20.h),
                           child: Text(
                             "Sign in",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              fontSize: 20,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.w300,
                               color: Color.fromARGB(255, 18, 120, 171),
                             ),

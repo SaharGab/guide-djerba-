@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projet_pfe/screens/screens.dart';
 import 'package:projet_pfe/screens/category_selection_screen.dart'; // Assurez-vous que le chemin d'importation est correct
@@ -37,14 +38,14 @@ class RoleSelectionScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 20, left: 20),
+                padding: EdgeInsets.only(top: 20.h, left: 20.w),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Color.fromARGB(146, 71, 71, 71),
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  height: 40,
-                  width: 40,
+                  height: 45.h,
+                  width: 45.w,
                   child: IconButton(
                     onPressed: () {
                       Navigator.pushReplacement(
@@ -62,15 +63,15 @@ class RoleSelectionScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 90,
+                height: 90.h,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding: EdgeInsets.symmetric(horizontal: 15.w),
                 child: Text(
                   "Are You a Provider or Explorer ?",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.rubik(
-                    fontSize: 38,
+                    fontSize: 38.sp,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
                   ),
@@ -103,7 +104,7 @@ class RoleSelectionScreen extends StatelessWidget {
                       }
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 24, top: 70),
+                      padding: EdgeInsets.only(left: 24.w, top: 70.h),
                       child: Column(
                         children: [
                           Container(
@@ -120,15 +121,18 @@ class RoleSelectionScreen extends StatelessWidget {
                               color: Color.fromARGB(100, 184, 181, 181),
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            padding: const EdgeInsets.all(24),
+                            padding: EdgeInsets.all(24.h.w),
+                            width: 160.w,
+                            height: 200.h,
                             child: Column(
                               children: [
                                 Container(
-                                  padding: EdgeInsets.only(top: 10, bottom: 22),
+                                  padding:
+                                      EdgeInsets.only(top: 10.h, bottom: 22.h),
                                   child: Image.asset(
                                     'icons/map.png',
-                                    height: 70,
-                                    width: 70,
+                                    height: 70.h,
+                                    width: 70.w,
                                   ),
                                 ),
                                 Text(
@@ -137,14 +141,12 @@ class RoleSelectionScreen extends StatelessWidget {
                                   style: GoogleFonts.aBeeZee(
                                     textStyle: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 23,
+                                        fontSize: 23.sp,
                                         fontWeight: FontWeight.w600),
                                   ),
                                 ),
                               ],
                             ),
-                            width: 160,
-                            height: 200,
                           ),
                         ],
                       ),
@@ -178,7 +180,7 @@ class RoleSelectionScreen extends StatelessWidget {
                       }
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 25, top: 70),
+                      padding: EdgeInsets.only(left: 25.w, top: 70.h),
                       child: Container(
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -193,15 +195,17 @@ class RoleSelectionScreen extends StatelessWidget {
                           color: const Color.fromARGB(100, 185, 181, 181),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        padding: const EdgeInsets.all(24),
+                        padding: EdgeInsets.all(24.h.w),
+                        width: 160.w,
+                        height: 200.h,
                         child: Column(
                           children: [
                             Container(
-                              padding: EdgeInsets.only(top: 10, bottom: 15),
+                              padding: EdgeInsets.only(top: 10.h, bottom: 15.h),
                               child: Image.asset(
                                 'icons/provider.png',
-                                height: 80,
-                                width: 80,
+                                height: 80.h,
+                                width: 80.w,
                               ),
                             ),
                             Text(
@@ -210,14 +214,12 @@ class RoleSelectionScreen extends StatelessWidget {
                               style: GoogleFonts.aBeeZee(
                                 textStyle: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 23,
+                                    fontSize: 23.sp,
                                     fontWeight: FontWeight.w600),
                               ),
                             ),
                           ],
                         ),
-                        width: 160,
-                        height: 200,
                       ),
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:projet_pfe/screens/aboutpage.dart';
 import 'package:projet_pfe/screens/signin.dart';
 import 'package:projet_pfe/screens/signup.dart'; // Assurez-vous d'importer la page d'inscription
@@ -24,7 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
           'Settings',
           style: TextStyle(
             fontWeight: FontWeight.w500,
-            fontSize: 24,
+            fontSize: 24.sp,
           ),
         ),
       ),

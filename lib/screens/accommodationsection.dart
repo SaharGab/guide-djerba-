@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:projet_pfe/models/touristSites.dart';
@@ -83,13 +84,13 @@ class AccommodationCard extends StatelessWidget {
         ));
       },
       child: Padding(
-          padding: const EdgeInsets.only(left: 15, bottom: 7),
+          padding: EdgeInsets.only(left: 15.w, bottom: 7.h),
           child: Material(
             elevation: 5,
             borderRadius: BorderRadius.circular(20),
             child: Container(
-              height: 350,
-              width: 160,
+              height: 350.h,
+              width: 160.w,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -103,8 +104,8 @@ class AccommodationCard extends StatelessWidget {
                         accommodation.imageUrls.isNotEmpty
                             ? accommodation.imageUrls.first
                             : '',
-                        height: 130,
-                        width: 150,
+                        height: 130.h,
+                        width: 150.w,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Center(
@@ -115,7 +116,7 @@ class AccommodationCard extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0.h.w),
                     child: Text(
                       overflow: TextOverflow.ellipsis,
                       accommodation.name,
@@ -126,13 +127,13 @@ class AccommodationCard extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0.h.w),
                     child: Row(
                       children: [
                         Icon(
                           Icons.location_on,
                           color: Color.fromARGB(255, 203, 136, 49),
-                          size: 20,
+                          size: 20.h.w,
                         ),
                         Text(
                           "Djerba Island ",
@@ -210,7 +211,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         child: Column(
           children: [
             Container(
-              height: 300,
+              height: 300.h,
               child: PageView.builder(
                 itemCount: widget.accommodation.imageUrls.length,
                 itemBuilder: (context, index) {
@@ -222,7 +223,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.h.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -230,19 +231,19 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     widget.accommodation.name, // Display the accommodation name
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
-                      fontSize: 24,
+                      fontSize: 24.sp,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Row(
                     children: [
                       Icon(Icons.location_on, color: Colors.black),
-                      SizedBox(width: 8),
+                      SizedBox(width: 8.w),
                       Expanded(
                         child: Text(
                           widget.accommodation.location, // Display the location
                           style: GoogleFonts.montserrat(
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
                           ),
                           softWrap: true,
@@ -253,19 +254,19 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
                   // Accommodation Name in bold
 
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   // Description Paragraph
                   Text(
                     widget.accommodation.description,
                     style: GoogleFonts.montserrat(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   // "View Map" Button
                   Padding(
-                    padding: const EdgeInsets.only(left: 100),
+                    padding: EdgeInsets.only(left: 100.w),
                     child: ElevatedButton(
                       onPressed: () {
                         // TODO: Implement view map logic
@@ -276,14 +277,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 32.w, vertical: 12.h),
                       ),
                       child: Text(
                         'View map'.toUpperCase(), // Button text
                         style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                         ),
                       ),
                     ),

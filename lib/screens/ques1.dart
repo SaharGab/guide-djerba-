@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -43,20 +44,20 @@ class _Ques1State extends State<Ques1> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 45, left: 15),
+                padding: EdgeInsets.only(top: 45.h, left: 15.w),
                 child: Text(
                   "What type of traveler are you?",
                   textAlign: TextAlign.start,
                   style: GoogleFonts.inter(
                     textStyle: TextStyle(
                       color: Color.fromARGB(255, 53, 53, 53),
-                      fontSize: 40,
+                      fontSize: 40.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: 25.h),
               Expanded(
                 child: ListView(
                   children: <Widget>[
@@ -78,7 +79,7 @@ class _Ques1State extends State<Ques1> {
 
   Widget buildRadioListTile(String title) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
       decoration: BoxDecoration(
         color: Color.fromARGB(160, 237, 230, 230),
         borderRadius: BorderRadius.circular(20),
@@ -89,7 +90,7 @@ class _Ques1State extends State<Ques1> {
           style: GoogleFonts.montserrat(
             textStyle: TextStyle(
               color: Color.fromARGB(255, 82, 80, 80),
-              fontSize: 20,
+              fontSize: 20.sp,
               fontWeight: FontWeight.w600,
             ),
           ),

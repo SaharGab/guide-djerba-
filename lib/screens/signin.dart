@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:projet_pfe/screens/event_list_screen.dart';
@@ -97,14 +98,14 @@ class _SigninState extends State<Signin> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 20),
+                  padding: EdgeInsets.only(top: 20.h, left: 20.w),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Color.fromARGB(146, 71, 71, 71),
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    height: 40,
-                    width: 40,
+                    height: 40.h,
+                    width: 40.w,
                     child: IconButton(
                       onPressed: () {
                         Navigator.pushReplacement(
@@ -122,52 +123,54 @@ class _SigninState extends State<Signin> {
                   ),
                 ),
                 SizedBox(
-                  height: 27,
+                  height: 27.h,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 25, left: 25),
+                Align(
+                  alignment: Alignment.center,
                   child: Text(
                     "Wander Mate  ",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.roboto(
-                      fontSize: 50,
+                      fontSize: 50.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 60),
+                Align(
+                  alignment: Alignment.center,
                   child: Text(
-                    "Welcome Back! ",
-                    textAlign: TextAlign.center,
+                    "Welcome Back!",
                     style: GoogleFonts.roboto(
-                      fontSize: 36,
+                      fontSize: 36.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 25, bottom: 25),
-                  child: Text(
-                    "Sign in to your existent account ",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w300,
-                      color: Colors.white,
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 25.h, top: 10.h),
+                    child: Text(
+                      "Sign in to your existent account ",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        fontSize: 22.sp,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Column(
                     children: [
                       buildTextField("Email", false, _emailTextController,
                           Icons.email_outlined),
                       SizedBox(
-                        height: 15,
+                        height: 15.h,
                       ),
                       buildTextField(
                           "Password", true, _passwordTextController, Icons.key)
@@ -176,19 +179,19 @@ class _SigninState extends State<Signin> {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.only(top: 10, left: 235, bottom: 25),
+                      EdgeInsets.only(top: 10.h, left: 235.w, bottom: 25.h),
                   child: Text(
                     "Forgot password ?",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.inter(
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w400,
                       color: Colors.white,
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 65),
+                  padding: EdgeInsets.only(left: 65.w),
                   child: GestureDetector(
                     onTap: () {
                       print("Button tapped");
@@ -202,29 +205,29 @@ class _SigninState extends State<Signin> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       alignment: Alignment.center,
+                      width: 260.w,
+                      height: 55.h,
                       child: Text(
                         "Sign in",
                         style: GoogleFonts.montserrat(
                           textStyle: TextStyle(
                             color: Colors.white,
-                            fontSize: 21,
+                            fontSize: 21.sp,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
-                      width: 260,
-                      height: 55,
                     ),
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.only(top: 20.h),
                   alignment: Alignment.center,
                   child: Text(
                     "Or connect with ",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.roboto(
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       color: Colors.white,
                     ),
                   ),
@@ -232,10 +235,10 @@ class _SigninState extends State<Signin> {
                 Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 68, top: 15),
+                      padding: EdgeInsets.only(left: 68.w, top: 15.h),
                       child: Container(
-                        width: 65,
-                        height: 60,
+                        width: 65.w,
+                        height: 60.h,
                         decoration: BoxDecoration(
                           color: Color.fromARGB(236, 158, 158, 158),
                           borderRadius: BorderRadius.circular(14),
@@ -243,17 +246,17 @@ class _SigninState extends State<Signin> {
                         child: Center(
                           child: Image.asset(
                             'icons/google.png',
-                            height: 45,
-                            width: 45,
+                            height: 45.h,
+                            width: 45.w,
                           ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 30, top: 15),
+                      padding: EdgeInsets.only(left: 30.w, top: 15.h),
                       child: Container(
-                        width: 65,
-                        height: 60,
+                        width: 65.w,
+                        height: 60.h,
                         decoration: BoxDecoration(
                           color: Color.fromARGB(236, 158, 158, 158),
                           borderRadius: BorderRadius.circular(14),
@@ -261,17 +264,17 @@ class _SigninState extends State<Signin> {
                         child: Center(
                           child: Image.asset(
                             'icons/twitter.png',
-                            height: 45,
-                            width: 45,
+                            height: 45.h,
+                            width: 45.w,
                           ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 30, top: 15),
+                      padding: EdgeInsets.only(left: 30.w, top: 15.h),
                       child: Container(
-                        width: 65,
-                        height: 60,
+                        width: 65.w,
+                        height: 60.h,
                         decoration: BoxDecoration(
                           color: Color.fromARGB(236, 158, 158, 158),
                           borderRadius: BorderRadius.circular(14),
@@ -279,8 +282,8 @@ class _SigninState extends State<Signin> {
                         child: Center(
                           child: Image.asset(
                             'icons/facebook.png',
-                            height: 45,
-                            width: 45,
+                            height: 45.h,
+                            width: 45.w,
                           ),
                         ),
                       ),
@@ -290,16 +293,16 @@ class _SigninState extends State<Signin> {
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      padding: EdgeInsets.symmetric(horizontal: 40.w),
                       child: Row(
                         children: [
                           Container(
-                            padding: EdgeInsets.only(top: 20),
+                            padding: EdgeInsets.only(top: 20.h),
                             child: Text(
                               "Don't have an account ? ",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.inter(
-                                fontSize: 20,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.w300,
                                 color: Colors.white,
                               ),
@@ -317,12 +320,12 @@ class _SigninState extends State<Signin> {
                               );
                             },
                             child: Container(
-                              padding: EdgeInsets.only(top: 20),
+                              padding: EdgeInsets.only(top: 20.h),
                               child: Text(
                                 "Sign up",
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.inter(
-                                  fontSize: 20,
+                                  fontSize: 20.sp,
                                   fontWeight: FontWeight.w300,
                                   color: Color.fromARGB(255, 18, 120, 171),
                                 ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:projet_pfe/screens/screens.dart';
@@ -43,20 +44,20 @@ class _Ques4State extends State<Ques4> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 45, left: 15, right: 10),
+                padding: EdgeInsets.only(top: 45.h, left: 15.w, right: 10.w),
                 child: Text(
                   "What type of accommodations do you seek in Djerba?",
                   textAlign: TextAlign.start,
                   style: GoogleFonts.inter(
                     textStyle: TextStyle(
                       color: Color.fromARGB(255, 53, 53, 53),
-                      fontSize: 40,
+                      fontSize: 40.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: 25.h),
               GridView.count(
                 crossAxisCount: 2,
                 childAspectRatio: 3 / 2,
@@ -85,7 +86,7 @@ class _Ques4State extends State<Ques4> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18),
       ),
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
         splashColor: Colors.blue.withAlpha(30),
@@ -107,18 +108,22 @@ class _Ques4State extends State<Ques4> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon,
-                size: 48,
+                size: 48.h.w,
                 color: isSelected
                     ? Color.fromARGB(180, 237, 230, 230)
                     : Color.fromARGB(255, 82, 80, 80)),
-            Text(title,
-                style: GoogleFonts.montserrat(
-                    textStyle: TextStyle(
-                        color: isSelected
-                            ? Color.fromARGB(180, 237, 230, 230)
-                            : Color.fromARGB(255, 82, 80, 80),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700))),
+            Text(
+              title,
+              style: GoogleFonts.montserrat(
+                textStyle: TextStyle(
+                  color: isSelected
+                      ? Color.fromARGB(180, 237, 230, 230)
+                      : Color.fromARGB(255, 82, 80, 80),
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
           ],
         ),
       ),

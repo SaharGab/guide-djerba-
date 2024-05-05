@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:projet_pfe/models/models.dart';
 import 'package:intl/intl.dart'; // Pour formatter les dates
 
@@ -33,46 +34,45 @@ class DetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(20.0.h.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       dataModel.title,
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 24.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Text(
                       'Start Date: $startDateStr',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16.sp),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Text(
                       'End Date: $endDateStr',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16.sp),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Text(
                       'Location: ${dataModel.location}',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16.sp),
                     ),
-                    SizedBox(height: 8),
-                    SizedBox(height: 8),
+                    SizedBox(height: 16.h),
                     Text(
                       "Details:",
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 24.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       dataModel.description,
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16.sp),
                     ),
-                    SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     ElevatedButton.icon(
                       onPressed: () {
                         // Implémentez la navigation vers la carte ou les détails de l'emplacement
@@ -83,7 +83,7 @@ class DetailScreen extends StatelessWidget {
                         selectionColor: Colors.black,
                       ),
                       style: ElevatedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 50),
+                        minimumSize: Size(double.infinity, 50.h.w),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projet_pfe/models/touristSites.dart';
 
@@ -18,8 +19,8 @@ class CafeDetailScreen extends StatelessWidget {
             icon: Image.asset(
               'icons/heart 1.png',
               color: Colors.black,
-              width: 25,
-              height: 30,
+              width: 25.w,
+              height: 30.h,
             ),
             onPressed: () {
               // Implémentez la logique de favoris pour le café
@@ -33,7 +34,7 @@ class CafeDetailScreen extends StatelessWidget {
           children: [
             // Carousel d'images
             Container(
-              height: 300,
+              height: 300.h,
               child: PageView.builder(
                 itemCount: cafe.imageUrls.length,
                 itemBuilder: (context, index) {
@@ -46,7 +47,7 @@ class CafeDetailScreen extends StatelessWidget {
             ),
             // Description et autres détails
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.h.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -55,20 +56,20 @@ class CafeDetailScreen extends StatelessWidget {
                     cafe.name,
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
-                      fontSize: 24,
+                      fontSize: 24.sp,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   // Emplacement avec icône
                   Row(
                     children: [
                       Icon(Icons.location_on, color: Colors.black),
-                      SizedBox(width: 8),
+                      SizedBox(width: 8.w),
                       Expanded(
                         child: Text(
                           cafe.location,
                           style: GoogleFonts.montserrat(
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
                           ),
                           softWrap: true,
@@ -76,16 +77,16 @@ class CafeDetailScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   // Paragraphe de description
                   Text(
                     cafe.description,
                     style: GoogleFonts.montserrat(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   // Bouton "Voir la carte"
                   Center(
                     child: ElevatedButton(
@@ -98,14 +99,14 @@ class CafeDetailScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 32.w, vertical: 12.h),
                       ),
                       child: Text(
                         'View map'.toUpperCase(),
                         style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                         ),
                       ),
                     ),

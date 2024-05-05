@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -28,8 +29,8 @@ class _AutourDeMoiState extends State<AutourDeMoi> {
   _init() async {
     _location = Location();
     _cameraPosition = CameraPosition(
-        target: LatLng(33.807597,
-            10.845146), // this is just the example lat and lng for initializing
+        target: LatLng(33.8370616,
+            10.9970700), // this is just the example lat and lng for initializing
         zoom: 15);
     _initLocation();
     getTouristSites();
@@ -43,8 +44,8 @@ class _AutourDeMoiState extends State<AutourDeMoi> {
     });
     _location?.onLocationChanged.listen((newLocation) {
       _currentLocation = newLocation;
-      moveToPosition(LatLng(_currentLocation?.latitude ?? 33.807597,
-          _currentLocation?.longitude ?? 10.845146));
+      moveToPosition(LatLng(_currentLocation?.latitude ?? 33.8370616,
+          _currentLocation?.longitude ?? 10.9970700));
     });
   }
 
@@ -67,9 +68,9 @@ class _AutourDeMoiState extends State<AutourDeMoi> {
 
   Widget _getMarker() {
     return Container(
-      width: 40,
-      height: 40,
-      padding: EdgeInsets.all(2),
+      width: 40.w,
+      height: 40.h,
+      padding: EdgeInsets.all(2.h.w),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(100),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,8 +21,8 @@ class PlaceDetailsScreen extends StatelessWidget {
             icon: Image.asset(
               'icons/heart 1.png',
               color: Colors.black,
-              width: 25,
-              height: 30,
+              width: 25.w,
+              height: 30.h,
             ),
             onPressed: () {
               // Implement favorite logic for 'place'
@@ -35,7 +36,7 @@ class PlaceDetailsScreen extends StatelessWidget {
           children: [
             // Images Carousel
             Container(
-              height: 300,
+              height: 300.h,
               child: PageView.builder(
                 itemCount: place.imageUrls.length,
                 itemBuilder: (context, index) {
@@ -48,7 +49,7 @@ class PlaceDetailsScreen extends StatelessWidget {
             ),
             // Description and Other Details
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.h.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -57,20 +58,20 @@ class PlaceDetailsScreen extends StatelessWidget {
                     place.name,
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
-                      fontSize: 24,
+                      fontSize: 24.sp,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   // Location with Icon
                   Row(
                     children: [
                       Icon(Icons.location_on, color: Colors.black),
-                      SizedBox(width: 8),
+                      SizedBox(width: 8.w),
                       Expanded(
                         child: Text(
                           place.location,
                           style: GoogleFonts.montserrat(
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
                           ),
                           softWrap: true,
@@ -78,16 +79,16 @@ class PlaceDetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   // Description Paragraph
                   Text(
                     place.description,
                     style: GoogleFonts.montserrat(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   // View Map Button
                   Center(
                     child: ElevatedButton(
@@ -100,14 +101,14 @@ class PlaceDetailsScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 32.w, vertical: 12.h),
                       ),
                       child: Text(
                         'View map'.toUpperCase(),
                         style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                         ),
                       ),
                     ),

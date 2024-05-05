@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SavesPage extends StatefulWidget {
   const SavesPage({super.key});
@@ -16,7 +17,7 @@ class __SavesPageState extends State<SavesPage> {
           'Saves',
           style: TextStyle(
             fontWeight: FontWeight.w500,
-            fontSize: 24,
+            fontSize: 24.sp,
           ),
         ),
         backgroundColor: Colors.white,
