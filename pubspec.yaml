@@ -53,6 +53,7 @@ dependencies:
   flutter_swiper_view: ^1.1.8
   google_maps_flutter: ^2.5.3
   location: ^6.0.1
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:
