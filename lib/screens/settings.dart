@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:projet_pfe/screens/signin.dart';
 
 class SettingsPg extends StatefulWidget {
@@ -18,7 +19,7 @@ class _settingsState extends State<SettingsPg> {
           'Settings',
           style: TextStyle(
             fontWeight: FontWeight.w500,
-            fontSize: 24,
+            fontSize: 24.sp,
           ),
         ),
       ),

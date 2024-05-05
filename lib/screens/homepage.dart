@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projet_pfe/models/models.dart';
@@ -71,22 +72,22 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             _buildTitleSection("Upcoming Events", _getEventCount(), "Events"),
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             _buildEventsSection(),
-            SizedBox(height: 2),
+            SizedBox(height: 2.h),
             _buildTitleSection("Places to Visit",
                 _getTouristSiteCount("To Explore"), "To Explore"),
-            SizedBox(height: 6),
+            SizedBox(height: 6.h),
             _buildPlacesToVisitSection(),
             _buildbox(),
             _buildTitleSection("Popular Hotels",
                 _getTouristSiteCount("Accommodation"), "Accommodation"),
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             AccommodationSection(),
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             _buildTitleSection("Coffe shops and restaurants",
                 _getTouristSiteCount("Cafe & Restaurant"), "Cafe & Restaurant"),
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             CafeRestaurantSection(),
             _buildTitleSection("Recommended plans",
                 _getTouristSiteCount("Activities"), "Activities"),
@@ -101,14 +102,14 @@ class _HomePageState extends State<HomePage> {
   Widget _buildTitleSection(
       String title, Future<int> itemCountFuture, String category) {
     return Padding(
-      padding: const EdgeInsets.only(top: 18, left: 20, right: 20),
+      padding: EdgeInsets.only(top: 18.h, left: 20.w, right: 20.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             title,
             style: GoogleFonts.montserrat(
-                fontSize: 17, fontWeight: FontWeight.w600),
+                fontSize: 17.sp, fontWeight: FontWeight.w600),
           ),
           FutureBuilder<int>(
             future: itemCountFuture,
@@ -128,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                 child: Text(
                   'See all (${snapshot.data})',
                   style: GoogleFonts.montserrat(
-                      fontSize: 16, fontWeight: FontWeight.w600),
+                      fontSize: 16.sp, fontWeight: FontWeight.w600),
                 ),
               );
             },
@@ -144,7 +145,7 @@ class _HomePageState extends State<HomePage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return SizedBox(
-            height: 210,
+            height: 210.h,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: snapshot.data!.length,
@@ -173,10 +174,10 @@ class _HomePageState extends State<HomePage> {
         }
         var toExploreSites = snapshot.data!;
         return Container(
-          height: 290,
+          height: 290.h,
           child: Swiper(
-            itemHeight: 290,
-            itemWidth: 430,
+            itemHeight: 290.h,
+            itemWidth: 430.w,
             layout: SwiperLayout.TINDER,
             loop: true,
             itemBuilder: (context, index) {
@@ -200,21 +201,23 @@ class _HomePageState extends State<HomePage> {
                           icon: Image.asset(
                             'icons/heart 1.png',
                             color: Colors.white,
-                            height: 30,
-                            width: 25,
+                            height: 30.h,
+                            width: 25.w,
                           ),
                           onPressed: () async {})),
                   Positioned(
-                    bottom: 20,
-                    left: 20,
+                    bottom: 20.h,
+                    left: 20.w,
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PlaceDetailsScreen(
-                                      place: toExploreSites[index],
-                                    )));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PlaceDetailsScreen(
+                              place: toExploreSites[index],
+                            ),
+                          ),
+                        );
                       },
                       child: Text("More Details"),
                       style: ElevatedButton.styleFrom(
@@ -224,8 +227,8 @@ class _HomePageState extends State<HomePage> {
                         elevation: 5,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14)),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.h, vertical: 10.w),
 
                         // Button styling
                       ),
@@ -243,8 +246,8 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildbox() {
     return Container(
-      padding: const EdgeInsets.all(15),
-      margin: const EdgeInsets.all(15),
+      padding: EdgeInsets.all(15.h.w),
+      margin: EdgeInsets.all(15.h.w),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           gradient: LinearGradient(
@@ -262,12 +265,12 @@ class _HomePageState extends State<HomePage> {
             'Discover Nearby Events & Places and see what’s happening around you',
             style: GoogleFonts.montserrat(
               color: Colors.white,
-              fontSize: 16,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 10.h),
           ElevatedButton(
             onPressed: () {
               Navigator.push(context,
@@ -297,8 +300,8 @@ class _HomePageState extends State<HomePage> {
         );
       },
       child: Container(
-        width: 120,
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        width: 120.w,
+        padding: EdgeInsets.symmetric(horizontal: 8.0.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -306,34 +309,34 @@ class _HomePageState extends State<HomePage> {
               borderRadius: BorderRadius.circular(16.0),
               child: Image.network(
                 data.imageUrl,
-                height: 150,
+                height: 150.h,
                 fit: BoxFit.cover,
                 errorBuilder: (BuildContext context, Object exception,
                     StackTrace? stackTrace) {
                   return Container(
-                    height: 150,
+                    height: 150.h,
                     color: Colors.grey[300],
                     child: Center(
                       child: Icon(
                         Icons.error,
                         color: Colors.red,
-                        size: 50,
+                        size: 50.h.w,
                       ),
                     ),
                   );
                 },
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0.h.w),
               child: Text(
                 data.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
-                    fontSize: 17, fontWeight: FontWeight.w400),
+                    fontSize: 17.sp, fontWeight: FontWeight.w400),
               ),
             ),
           ],
@@ -468,8 +471,8 @@ class _PlaceDetailsScreenState extends State<PlaceDetailsScreen> {
             icon: Image.asset(
               'icons/heart 1.png',
               color: Colors.black,
-              width: 25,
-              height: 30,
+              width: 25.w,
+              height: 30.h,
             ),
             onPressed: () {
               // Implement favorite logic for 'place'
@@ -483,7 +486,7 @@ class _PlaceDetailsScreenState extends State<PlaceDetailsScreen> {
           children: [
             // Images Carousel
             Container(
-              height: 300,
+              height: 300.h,
               child: PageView.builder(
                 itemCount: widget.place.imageUrls.length,
                 itemBuilder: (context, index) {
@@ -496,7 +499,7 @@ class _PlaceDetailsScreenState extends State<PlaceDetailsScreen> {
             ),
             // Description and Other Details
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.h.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -505,20 +508,20 @@ class _PlaceDetailsScreenState extends State<PlaceDetailsScreen> {
                     widget.place.name,
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
-                      fontSize: 24,
+                      fontSize: 24.sp,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   // Location with Icon
                   Row(
                     children: [
                       Icon(Icons.location_on, color: Colors.black),
-                      SizedBox(width: 8),
+                      SizedBox(width: 8.w),
                       Expanded(
                         child: Text(
                           widget.place.location,
                           style: GoogleFonts.montserrat(
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
                           ),
                           softWrap: true,
@@ -526,16 +529,16 @@ class _PlaceDetailsScreenState extends State<PlaceDetailsScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   // Description Paragraph
                   Text(
                     widget.place.description,
                     style: GoogleFonts.montserrat(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   RatingWidget(
                     initialRating:
                         0, // Charger cette valeur depuis Firestore si déjà noté

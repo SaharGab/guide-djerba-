@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projet_pfe/widgets/reusable_widgets.dart';
 
@@ -34,27 +35,27 @@ class Page1 extends StatelessWidget {
             children: [
               Skip_button(context),
               SizedBox(
-                height: 300,
+                height: 300.h,
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 15, left: 20),
+                padding: EdgeInsets.only(bottom: 15.h, left: 20.w),
                 child: Text(
                   "Welcome to\nWander Mate",
                   textAlign: TextAlign.left,
                   style: GoogleFonts.roboto(
-                    fontSize: 38,
+                    fontSize: 38.sp,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 24, right: 24),
+                padding: EdgeInsets.only(left: 24.w, right: 24.w),
                 child: Text(
                   "Discover the essence of Djerba with WanderMate! Explore its beauty, taste its flavors, and feel its warmth as you embark on your adventure across the island.",
                   style: GoogleFonts.inter(
                     color: Colors.white,
-                    fontSize: 22,
+                    fontSize: 22.sp,
                   ),
                 ),
               ),

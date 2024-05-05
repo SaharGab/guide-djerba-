@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:projet_pfe/models/touristSites.dart';
 
@@ -49,7 +50,7 @@ class CategoryDetailsScreen extends StatelessWidget {
 
   Widget _buildHotelItemCard(TouristSite site) {
     return Card(
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(10.h.w),
       elevation: 4,
       clipBehavior: Clip.antiAlias, // Pour une belle bordure arrondie
       shape: RoundedRectangleBorder(
@@ -62,35 +63,35 @@ class CategoryDetailsScreen extends StatelessWidget {
             site.imageUrls.isNotEmpty
                 ? site.imageUrls.first
                 : 'https://via.placeholder.com/400x200',
-            height: 200,
+            height: 200.h,
             fit: BoxFit.cover,
             width: double.infinity,
           ),
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(10.h.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   site.name,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 // Icônes d'étoiles pour la notation
                 Row(
                   children: List.generate(
                       4,
                       (index) =>
-                          Icon(Icons.star, color: Colors.amber, size: 20)),
+                          Icon(Icons.star, color: Colors.amber, size: 20.h.w)),
                 ),
-                SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 Text(
                   site.description,
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     color: Colors.grey[600],
                   ),
                   maxLines: 2,
@@ -100,7 +101,7 @@ class CategoryDetailsScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -121,7 +122,7 @@ class CategoryDetailsScreen extends StatelessWidget {
 
   Widget _buildItemCard(TouristSite site) {
     return Card(
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(10.h.w),
       elevation: 4,
       clipBehavior: Clip.antiAlias, // Pour une belle bordure arrondie
       shape: RoundedRectangleBorder(
@@ -134,27 +135,27 @@ class CategoryDetailsScreen extends StatelessWidget {
             site.imageUrls.isNotEmpty
                 ? site.imageUrls.first
                 : 'https://via.placeholder.com/400x200',
-            height: 200,
+            height: 200.h,
             fit: BoxFit.cover,
             width: double.infinity,
           ),
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(10.h.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   site.name,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 Text(
                   site.description,
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     color: Colors.grey[600],
                   ),
                   maxLines: 3,
@@ -164,7 +165,7 @@ class CategoryDetailsScreen extends StatelessWidget {
             ),
           ),
           Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

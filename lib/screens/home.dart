@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,12 +18,28 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   final User? user = FirebaseAuth.instance.currentUser;
-
   final List<Widget> _pages = [
     HomePage(),
     SearchPage(),
     SavesPage(),
-    TranslationPage(),
+    FutureBuilder<List<CameraDescription>>(
+        future: availableCameras(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator.adaptive(),
+            );
+          }
+          if (snapshot.hasError || !snapshot.hasData) {
+            return const Center(
+              child: Text("Error"),
+            );
+          }
+          final cameras = snapshot.data!.first;
+          return TranslationPage(
+            camera: cameras,
+          );
+        }),
     // Assurez-vous que ces pages sont bien définies et importées
   ];
 

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projet_pfe/models/touristSites.dart';
 import 'package:projet_pfe/widgets/comment.dart';
@@ -133,8 +134,8 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
             icon: Image.asset(
               'icons/heart 1.png',
               color: Colors.black,
-              width: 25,
-              height: 30,
+              width: 25.w,
+              height: 30.h,
             ),
             onPressed: () {
               // Implémentez la logique de favoris pour le café
@@ -148,7 +149,7 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
           children: [
             // Carousel d'images
             Container(
-              height: 300,
+              height: 300.h,
               child: PageView.builder(
                 itemCount: widget.cafe.imageUrls.length,
                 itemBuilder: (context, index) {
@@ -161,7 +162,7 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
             ),
             // Description et autres détails
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.h.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -170,20 +171,20 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
                     widget.cafe.name,
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
-                      fontSize: 24,
+                      fontSize: 24.sp,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   // Emplacement avec icône
                   Row(
                     children: [
                       Icon(Icons.location_on, color: Colors.black),
-                      SizedBox(width: 8),
+                      SizedBox(width: 8.w),
                       Expanded(
                         child: Text(
                           widget.cafe.location,
                           style: GoogleFonts.montserrat(
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
                           ),
                           softWrap: true,
@@ -191,16 +192,16 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   // Paragraphe de description
                   Text(
                     widget.cafe.description,
                     style: GoogleFonts.montserrat(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   RatingWidget(
                     initialRating:
                         0, // Charger cette valeur depuis Firestore si déjà noté

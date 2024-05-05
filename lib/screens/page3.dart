@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projet_pfe/screens/page4.dart';
 
@@ -36,32 +37,32 @@ class Page3 extends StatelessWidget {
             children: [
               Skip_button(context),
               SizedBox(
-                height: 240,
+                height: 240.h,
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 15, left: 20),
+                padding: EdgeInsets.only(bottom: 15.h, left: 20.w),
                 child: Text(
                   "Personnalized \nRecommendations ",
                   textAlign: TextAlign.left,
                   style: GoogleFonts.roboto(
-                    fontSize: 38,
+                    fontSize: 38.sp,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 24, right: 24),
+                padding: EdgeInsets.only(left: 24.w, right: 24.w),
                 child: Text(
                   "Let us be your travel companion! With personalized recommandations tailored to your interests and preferences, WANDER MATE helps you uncover hidden gems.",
                   style: GoogleFonts.inter(
                     color: Colors.white,
-                    fontSize: 22,
+                    fontSize: 22.sp,
                   ),
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 25),
+                padding: EdgeInsets.only(top: 25.h),
                 alignment: Alignment.center,
                 child: GestureDetector(
                   onTap: () => Navigator.pushReplacement(
@@ -78,18 +79,18 @@ class Page3 extends StatelessWidget {
                       borderRadius: BorderRadius.circular(19),
                     ),
                     alignment: Alignment.center,
+                    width: 190.w,
+                    height: 55.h,
                     child: Text(
                       "Get Started ",
                       style: GoogleFonts.montserrat(
                         textStyle: TextStyle(
                           color: Colors.white,
-                          fontSize: 19,
+                          fontSize: 19.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                    width: 190,
-                    height: 55,
                   ),
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -135,8 +136,8 @@ class _SeePlanState extends State<SeePlan> {
             icon: Image.asset(
               'icons/heart 1.png',
               color: Colors.black,
-              width: 25,
-              height: 30,
+              width: 25.w,
+              height: 30.h,
             ),
             onPressed: () {
               // Implement favorite logic for 'activity'
@@ -150,7 +151,7 @@ class _SeePlanState extends State<SeePlan> {
           children: [
             // Images Carousel
             Container(
-              height: 300,
+              height: 300.h,
               child: PageView.builder(
                 itemCount: widget.activity.imageUrls.length,
                 itemBuilder: (context, index) {
@@ -163,7 +164,7 @@ class _SeePlanState extends State<SeePlan> {
             ),
             // Description and Other Details
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.h.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -172,20 +173,20 @@ class _SeePlanState extends State<SeePlan> {
                     widget.activity.name,
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
-                      fontSize: 24,
+                      fontSize: 24.sp,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   // Location with Icon
                   Row(
                     children: [
                       Icon(Icons.location_on, color: Colors.black),
-                      SizedBox(width: 8),
+                      SizedBox(width: 8.w),
                       Expanded(
                         child: Text(
                           widget.activity.location,
                           style: GoogleFonts.montserrat(
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
                           ),
                           softWrap: true,
@@ -193,16 +194,16 @@ class _SeePlanState extends State<SeePlan> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   // Description Paragraph
                   Text(
                     widget.activity.description,
                     style: GoogleFonts.montserrat(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   RatingWidget(
                     initialRating:
                         0, // Charger cette valeur depuis Firestore si déjà noté

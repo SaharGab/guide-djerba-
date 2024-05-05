@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:projet_pfe/models/touristSites.dart';
 import 'package:projet_pfe/screens/accommodationsection.dart';
 import 'package:projet_pfe/screens/detailscaferestau.dart';
@@ -72,14 +73,14 @@ class _SearchPageState extends State<SearchPage> {
       'To Explore'
     ];
     return Container(
-      height: 50, // Hauteur fixe pour le conteneur
+      height: 50.h, // Hauteur fixe pour le conteneur
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 4), // Espacement entre les chips
+            padding: EdgeInsets.symmetric(
+                horizontal: 4.w), // Espacement entre les chips
             child: ChoiceChip(
               label: Text(categories[index]),
               selected: selectedCategory == categories[index],
@@ -108,7 +109,7 @@ class _SearchPageState extends State<SearchPage> {
           'Search',
           style: TextStyle(
             fontWeight: FontWeight.w500,
-            fontSize: 24,
+            fontSize: 24.sp,
           ),
         ),
         actions: [
@@ -124,7 +125,7 @@ class _SearchPageState extends State<SearchPage> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0.h.w),
             child: TextField(
               focusNode: _focusNode,
               controller: _searchController,
@@ -155,17 +156,17 @@ class _SearchPageState extends State<SearchPage> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   elevation: 4,
-                  margin: EdgeInsets.all(8),
+                  margin: EdgeInsets.all(8.h.w),
                   child: ListTile(
                     contentPadding:
-                        EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                        EdgeInsets.symmetric(horizontal: 16.h, vertical: 10.w),
                     leading: site.imageUrls.isNotEmpty
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.network(
                               site.imageUrls.first,
-                              width: 50,
-                              height: 50,
+                              width: 50.w,
+                              height: 50.h,
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
                                 return Icon(Icons
@@ -174,17 +175,18 @@ class _SearchPageState extends State<SearchPage> {
                             ),
                           )
                         : SizedBox(
-                            width: 50, height: 50), // Empty box if no image URL
+                            width: 50.w,
+                            height: 50.h), // Empty box if no image URL
                     title: Text(
                       site.name,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
                       site.description,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 14.sp),
                     ),
                     onTap: () {
                       Navigator.push(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:projet_pfe/models/touristSites.dart';
@@ -62,7 +63,7 @@ class _CafeRestaurantSectionState extends State<CafeRestaurantSection> {
             } else {
               List<TouristSite> sites = snapshot.data!;
               return Container(
-                height: 200,
+                height: 200.h,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: sites.length,
@@ -92,13 +93,13 @@ class CafeRestaurantCard extends StatelessWidget {
             builder: (context) => CafeDetailScreen(cafe: site)));
       },
       child: Padding(
-        padding: const EdgeInsets.only(left: 15, bottom: 7),
+        padding: EdgeInsets.only(left: 15.w, bottom: 7.h),
         child: Material(
           elevation: 5,
           borderRadius: BorderRadius.circular(20),
           child: Container(
-            height: 350,
-            width: 160,
+            height: 350.h,
+            width: 160.w,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
@@ -110,8 +111,8 @@ class CafeRestaurantCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
                       site.imageUrls.isNotEmpty ? site.imageUrls.first : '',
-                      height: 130,
-                      width: 150,
+                      height: 130.h,
+                      width: 150.w,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Center(child: Icon(Icons.error));
@@ -120,7 +121,7 @@ class CafeRestaurantCard extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0.h.w),
                   child: Text(
                     site.name,
                     style: GoogleFonts.montserrat(
@@ -131,13 +132,13 @@ class CafeRestaurantCard extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0.h.w),
                   child: Row(
                     children: [
                       Icon(
                         Icons.location_on,
                         color: Color.fromARGB(255, 203, 136, 49),
-                        size: 20,
+                        size: 20.sp,
                       ),
                       Text(
                         "Djerba Island", // Adjust location display

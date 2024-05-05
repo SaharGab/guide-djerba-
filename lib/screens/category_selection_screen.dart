@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:projet_pfe/screens/event_list_screen.dart';
 import 'event_details_screen.dart';
 import 'settings.dart';
@@ -33,10 +34,10 @@ class CategorySelectionScreen extends StatelessWidget {
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 30),
+        padding: EdgeInsets.only(top: 30.h),
         child: GridView.count(
           crossAxisCount: 2,
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.h.w),
           children: <Widget>[
             _buildCategoryCard(
                 context, 'Accommodation', 'icons/accomodation.png'),
@@ -64,9 +65,9 @@ class CategorySelectionScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset(iconPath, width: 80),
+            Image.asset(iconPath, width: 80.w),
             Text(category,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
           ],
         ),
       ),

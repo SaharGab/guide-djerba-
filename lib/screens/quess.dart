@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:projet_pfe/screens/screens.dart';
 
@@ -49,14 +50,14 @@ class _QuesSState extends State<QuesS> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 20, left: 20),
+                padding: EdgeInsets.only(top: 20.h, left: 20.w),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Color.fromARGB(146, 71, 71, 71),
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  height: 40,
-                  width: 40,
+                  height: 40.h,
+                  width: 40.w,
                   child: IconButton(
                     onPressed: () {
                       Navigator.push(
@@ -79,13 +80,13 @@ class _QuesSState extends State<QuesS> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 165),
+                padding: EdgeInsets.symmetric(horizontal: 165.w),
                 child: Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
                     SizedBox(
-                      width: 70,
-                      height: 70,
+                      width: 70.w,
+                      height: 70.h,
                       child: CircularProgressIndicator(
                         value: (currentPage + 1) / totalPages,
                         backgroundColor: Colors.grey,
@@ -121,7 +122,7 @@ class _QuesSState extends State<QuesS> {
                 ),
               ),
               SizedBox(
-                height: 35,
+                height: 35.h,
               )
             ],
           ),

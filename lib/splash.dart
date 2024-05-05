@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projet_pfe/pages.dart';
 
@@ -45,11 +46,11 @@ class _SplashState extends State<Splash> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 55),
+                padding: EdgeInsets.symmetric(horizontal: 55.w),
                 child: Text("WanderMate",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.acme(
-                      fontSize: 52,
+                      fontSize: 52.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     )),

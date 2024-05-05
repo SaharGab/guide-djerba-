@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -60,10 +61,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.h.w),
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: EdgeInsets.symmetric(horizontal: 8.0.w),
               child: DropdownButtonFormField<String>(
                 isExpanded: true,
                 value:
@@ -127,16 +128,16 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               onTap: _pickImage,
               child: _image == null
                   ? Container(
-                      height: 150,
+                      height: 150.h,
                       width: double.infinity,
                       color: Colors.grey[300],
                       child: Icon(
                         Icons.cloud_download,
                         color: const Color.fromARGB(230, 255, 255, 255),
-                        size: 50,
+                        size: 50.h.w,
                       ),
                     )
-                  : Image.file(_image!, height: 200),
+                  : Image.file(_image!, height: 200.h),
             ),
             ElevatedButton(
               onPressed: _submitEvent,
