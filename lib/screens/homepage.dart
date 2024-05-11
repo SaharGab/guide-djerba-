@@ -13,6 +13,8 @@ import 'package:projet_pfe/screens/categorydetailsscreen.dart';
 import 'package:projet_pfe/screens/data_base_service.dart';
 import 'package:projet_pfe/screens/recommendedplans.dart';
 import 'package:projet_pfe/screens/storyscreen.dart';
+import 'package:projet_pfe/services/activity_recommendation.dart';
+import 'package:projet_pfe/services/recommendationscreen.dart';
 import 'package:projet_pfe/widgets/comment.dart';
 import 'package:projet_pfe/widgets/comment_button.dart';
 import 'package:projet_pfe/widgets/helper_methods.dart';
@@ -618,6 +620,26 @@ class _PlaceDetailsScreenState extends State<PlaceDetailsScreen> {
                 ],
               ),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RecommendationsScreen()),
+                );
+              },
+              child: Text('Voir les recommandations'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ActivitiesRecommendationScreen()),
+                );
+              },
+              child: Text('Voir les activities'),
+            )
           ],
         ),
       ),

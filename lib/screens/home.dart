@@ -94,9 +94,7 @@ class _HomeState extends State<Home> {
               actions: [
                 IconButton(
                   icon: Image.asset('icons/bell.png', height: 25, width: 25),
-                  onPressed: () {
-                    // Action pour les notifications
-                  },
+                  onPressed: () {},
                 ),
                 IconButton(
                   icon: Image.asset('icons/settings 1.png',

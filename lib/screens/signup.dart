@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projet_pfe/screens/screens.dart';
+import 'package:projet_pfe/widgets/firebase_notifications.dart';
 import 'package:projet_pfe/widgets/reusable_widgets.dart';
-import 'package:projet_pfe/controllers/user_controller.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -175,13 +177,27 @@ class _SignupState extends State<Signup> {
                         }
 
                         try {
-                          User user = User(
-                            fullname: fullname,
+                          UserCredential userCredential = await FirebaseAuth
+                              .instance
+                              .createUserWithEmailAndPassword(
                             email: email,
                             password: password,
                           );
-                          await user.registerUser(email, password);
 
+                          // UID of the user obtained after registration
+                          String userId = userCredential.user!.uid;
+
+                          // Add full name to Firestore
+                          await FirebaseFirestore.instance
+                              .collection('Users')
+                              .doc(userId)
+                              .set({'fullname': fullname, 'email': email});
+
+                          // Initialize notifications for the new user
+                          FirebaseNotifications firebaseNotifications =
+                              FirebaseNotifications();
+                          firebaseNotifications
+                              .setupNotificationsForUser(userId);
                           Navigator.push(
                             context,
                             MaterialPageRoute(

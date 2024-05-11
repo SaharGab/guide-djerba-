@@ -58,10 +58,20 @@ dependencies:
   google_mlkit_translation: ^0.11.0
   google_mlkit_language_id: ^0.11.0
   flutter_screenutil: ^5.9.0
+  firebase_messaging: ^14.7.16
+  http: ^1.2.0
+  flutter_cache_manager: ^3.3.1
+  flutter_local_notifications: ^17.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "icons/logo.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

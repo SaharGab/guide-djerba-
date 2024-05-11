@@ -7,15 +7,20 @@ import 'package:projet_pfe/screens/event_details_screen.dart';
 import 'package:projet_pfe/splash.dart';
 import 'dart:async';
 
+import 'package:projet_pfe/widgets/notification_screen.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   await EventUtils.deleteExpiredEvents();
 
   runApp(const MyApp());
 }
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -42,7 +47,9 @@ class _MyAppState extends State<MyApp> {
     return ScreenUtilInit(
       designSize: const Size(393, 808),
       builder: (_, child) {
-        return const MaterialApp(
+        return MaterialApp(
+          navigatorKey: navigatorKey,
+          routes: {'/notifications': (context) => const NotificationScreen()},
           debugShowCheckedModeBanner: false,
           home: Splash(),
         );

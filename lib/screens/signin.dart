@@ -8,6 +8,7 @@ import 'package:projet_pfe/screens/event_details_screen.dart';
 import 'package:projet_pfe/screens/event_list_screen.dart';
 
 import 'package:projet_pfe/screens/screens.dart';
+import 'package:projet_pfe/widgets/firebase_notifications.dart';
 import 'package:projet_pfe/widgets/reusable_widgets.dart';
 
 class Signin extends StatefulWidget {
@@ -51,7 +52,9 @@ class _SigninState extends State<Signin> {
 
       if (userCredential.user != null) {
         await EventUtils.deleteExpiredEvents();
+
         final userId = userCredential.user!.uid;
+        FirebaseNotifications().setupNotificationsForUser(userId);
         final docSnap = await FirebaseFirestore.instance
             .collection('Users')
             .doc(userId)

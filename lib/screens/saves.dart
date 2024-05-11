@@ -22,6 +22,7 @@ class __SavesPageState extends State<SavesPage> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
+        actions: [],
       ),
     );
   }
