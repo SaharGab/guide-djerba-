@@ -7,6 +7,9 @@ import 'package:projet_pfe/screens/saves.dart';
 import 'package:projet_pfe/screens/search.dart';
 import 'package:projet_pfe/screens/settings_page.dart';
 import 'package:projet_pfe/screens/translation.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:projet_pfe/screens/signup.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -18,6 +21,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   final User? user = FirebaseAuth.instance.currentUser;
+  List<RemoteMessage> notifications = [];
+  int _notificationCount = 0;
+
   final List<Widget> _pages = [
     HomePage(),
     SearchPage(),
@@ -40,8 +46,91 @@ class _HomeState extends State<Home> {
             camera: cameras,
           );
         }),
-    // Assurez-vous que ces pages sont bien définies et importées
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    requestNotificationPermissions();
+    initializeFirebaseMessaging();
+  }
+
+  void requestNotificationPermissions() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('User granted permission');
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      print('User granted provisional permission');
+    } else {
+      print('User declined or has not accepted permission');
+    }
+  }
+
+  void initializeFirebaseMessaging() {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    messaging
+        .subscribeToTopic('all'); // Abonner les utilisateurs au topic 'all'
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      setState(() {
+        notifications.add(message);
+        _notificationCount++;
+      });
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                NotificationScreen(notifications: notifications)),
+      );
+    });
+
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {
+      if (message != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  NotificationScreen(notifications: notifications)),
+        );
+      }
+    });
+  }
+
+  void _onItemTapped(int index) {
+    if (index == 2 && user == null) {
+      // Show Snackbar for guest user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Create an account for a personalized experience!'),
+          action: SnackBarAction(
+            label: 'Sign Up',
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Signup()));
+            },
+          ),
+        ),
+      );
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +181,25 @@ class _HomeState extends State<Home> {
                       },
                     ),
               actions: [
-                IconButton(
-                  icon: Image.asset('icons/bell.png', height: 25, width: 25),
-                  onPressed: () {},
+                badges.Badge(
+                  badgeContent: Text(
+                    _notificationCount.toString(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  child: IconButton(
+                    icon: Image.asset('icons/bell.png', height: 25, width: 25),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NotificationScreen(
+                                notifications: notifications)),
+                      );
+                      setState(() {
+                        _notificationCount = 0;
+                      });
+                    },
+                  ),
                 ),
                 IconButton(
                   icon: Image.asset('icons/settings 1.png',
@@ -136,7 +241,7 @@ class _HomeState extends State<Home> {
               width: 30,
               height: 35,
             ),
-            label: 'Saves',
+            label: 'For You',
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
@@ -150,13 +255,87 @@ class _HomeState extends State<Home> {
         currentIndex: _selectedIndex,
         selectedItemColor: Color.fromARGB(255, 18, 120, 171),
         unselectedItemColor: Color.fromARGB(255, 27, 27, 27),
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onTap: _onItemTapped,
         showSelectedLabels: true,
         showUnselectedLabels: true,
+      ),
+    );
+  }
+}
+
+class NotificationScreen extends StatelessWidget {
+  final List<RemoteMessage> notifications;
+
+  const NotificationScreen({Key? key, required this.notifications})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Notifications"),
+      ),
+      body: ListView.builder(
+        itemCount: notifications.length,
+        itemBuilder: (context, index) {
+          RemoteMessage message = notifications[index];
+          return ListTile(
+            title: Text(message.notification?.title ?? 'No Title'),
+            subtitle: Text(message.notification?.body ?? 'No Body'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      NotificationDetailScreen(message: message),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class NotificationDetailScreen extends StatelessWidget {
+  final RemoteMessage message;
+
+  const NotificationDetailScreen({Key? key, required this.message})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Notification Detail"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              message.notification?.title ?? 'No Title',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              message.notification?.body ?? 'No Body',
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Data:',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              message.data.toString(),
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
       ),
     );
   }

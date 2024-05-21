@@ -1,28 +1,39 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:projet_pfe/main.dart'; // Assurez-vous que cette importation est correcte pour votre projet
 
 class FirebaseNotifications {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Initialiser les notifications pour cet appareil ou cette application
   Future<void> initNotifications(String userId) async {
-    await _firebaseMessaging.requestPermission();
+    NotificationSettings settings = await _firebaseMessaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
 
-    // Obtenir et stocker le token initial
-    String? token = await _firebaseMessaging.getToken();
-    if (token != null) {
-      _updateUserToken(userId, token);
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      // Supprimer l'ancien token pour forcer la génération d'un nouveau
+      await _firebaseMessaging.deleteToken();
+
+      // Obtenir et stocker le nouveau token
+      String? token = await _firebaseMessaging.getToken();
+      if (token != null) {
+        _updateUserToken(userId, token);
+      }
+
+      // Écouter les mises à jour du token
+      FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
+        _updateUserToken(userId, newToken);
+      });
+
+      handleBackgroundNotification();
+    } else {
+      print('Permission non accordée');
     }
-
-    // Écouter les mises à jour du token
-    FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
-      _updateUserToken(userId, newToken);
-    });
-
-    handleBackgroundNotification();
   }
 
   void _updateUserToken(String userId, String token) {
@@ -30,11 +41,10 @@ class FirebaseNotifications {
         .collection('Users')
         .doc(userId)
         .update({'fcmToken': token}).catchError((error) {
-      print("Error updating token: $error");
+      print("Erreur lors de la mise à jour du token : $error");
     });
   }
 
-  // Gérer les notifications reçues quand l'application est en arrière-plan
   Future<void> handleBackgroundNotification() async {
     FirebaseMessaging.onMessage.listen(handleMessage);
     FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
@@ -47,7 +57,6 @@ class FirebaseNotifications {
     });
   }
 
-  // Gérer les notifications quand elles sont reçues
   void handleMessage(RemoteMessage? message) {
     if (message == null) return;
     navigatorKey.currentState!.pushNamed(

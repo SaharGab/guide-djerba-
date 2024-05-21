@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +16,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   User? user = FirebaseAuth.instance.currentUser;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,14 @@ class _SettingsPageState extends State<SettingsPage> {
               title: Text('Logout'),
               onTap: () async {
                 try {
-                  await FirebaseAuth.instance.signOut();
+                  if (user != null) {
+                    await _firebaseMessaging.deleteToken();
+                    await FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(user!.uid)
+                        .update({'fcmToken': FieldValue.delete()});
+                    await FirebaseAuth.instance.signOut();
+                  }
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

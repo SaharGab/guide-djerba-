@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
-
 import 'dart:ui' as ui;
 import 'dart:typed_data';
 
@@ -34,7 +32,7 @@ class _AutourDeMoiState extends State<AutourDeMoi> {
     _cameraPosition = CameraPosition(
         target: LatLng(33.8370616,
             10.9970700), // this is just the example lat and lng for initializing
-        zoom: 12);
+        zoom: 13);
     _initLocation();
     await getTouristSites();
     setState(
@@ -67,7 +65,7 @@ class _AutourDeMoiState extends State<AutourDeMoi> {
   moveToPosition(LatLng latLng) async {
     GoogleMapController mapController = await _googleMapController.future;
     mapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: latLng, zoom: 7)));
+        CameraPosition(target: latLng, zoom: 8)));
   }
 
   @override
@@ -140,7 +138,7 @@ class _AutourDeMoiState extends State<AutourDeMoi> {
   }
 
   Future<BitmapDescriptor> getMarkerIconFromUrl(String imageUrl,
-      {int width = 50, int height = 50}) async {
+      {int width = 65, int height = 65}) async {
     final response = await http.get(Uri.parse(imageUrl));
     final bytes = response.bodyBytes;
 
