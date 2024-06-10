@@ -1,7 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+
 import 'package:projet_pfe/main.dart'; // Assurez-vous que cette importation est correcte pour votre projet
 
 class FirebaseNotifications {

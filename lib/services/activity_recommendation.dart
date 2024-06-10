@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:projet_pfe/models/touristSites.dart';
 import 'package:projet_pfe/services/recommendationservice.dart';
+import 'package:projet_pfe/screens/seeplan.dart';
 
 class ActivitiesRecommendationScreen extends StatefulWidget {
   @override
@@ -34,42 +36,51 @@ class _ActivitiesRecommendationScreenState
                   itemBuilder: (context, index) {
                     var doc = sitesSnapshot.data![index];
                     var data = doc.data() as Map<String, dynamic>;
-                    List<dynamic> imageUrls = data['imageUrls'] ??
-                        []; // Assurez-vous que c'est une liste
+                    List<dynamic> imageUrls = data['imageUrls'] ?? [];
 
                     String firstImageUrl = imageUrls.isNotEmpty
                         ? imageUrls[0]
-                        : 'default_image.jpg'; // Utilisez une image par défaut si la liste est vide
-
-                    return Card(
-                      child: Column(
-                        children: <Widget>[
-                          Image.network(
-                            firstImageUrl,
-                            height: 200.h,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
+                        : 'default_image.jpg';
+                    TouristSite site = TouristSite.fromFirestore(doc);
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SeePlan(activity: site),
                           ),
-                          ListTile(
-                            title: Text(data['name']),
-                            subtitle: Text(
-                              data['description'],
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                        );
+                      },
+                      child: Card(
+                        child: Column(
+                          children: <Widget>[
+                            Image.network(
+                              firstImageUrl,
+                              height: 200.h,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
                             ),
-                          )
-                        ],
+                            ListTile(
+                              title: Text(data['name']),
+                              subtitle: Text(
+                                data['description'],
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     );
                   },
                 );
               } else {
-                return CircularProgressIndicator();
+                return Center(child: CircularProgressIndicator());
               }
             },
           );
         } else {
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         }
       },
     );

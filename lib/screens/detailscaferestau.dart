@@ -8,6 +8,7 @@ import 'package:projet_pfe/widgets/comment.dart';
 import 'package:projet_pfe/widgets/comment_button.dart';
 import 'package:projet_pfe/widgets/helper_methods.dart';
 import 'package:projet_pfe/widgets/rating_widget.dart';
+import 'package:projet_pfe/screens/signup.dart';
 
 class CafeDetailScreen extends StatefulWidget {
   final TouristSite cafe;
@@ -20,14 +21,52 @@ class CafeDetailScreen extends StatefulWidget {
 
 class _CafeDetailScreenState extends State<CafeDetailScreen> {
   final _commentTextController = TextEditingController();
+  final User? currentUser = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
     super.initState();
   }
 
+  void showLoginSnackbar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Create an account to leave a comment!'),
+        action: SnackBarAction(
+          label: 'Sign Up',
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Signup()),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  void showLoginSnackbarForRating() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Create an account to rate this site!'),
+        action: SnackBarAction(
+          label: 'Sign Up',
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Signup()),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   // add a comment
   void addComment(String commentText) {
-    final currentUser = FirebaseAuth.instance.currentUser!;
+    if (currentUser == null) {
+      showLoginSnackbar();
+      return;
+    }
     // write the comment to firestore under the comments collection for this post
     FirebaseFirestore.instance
         .collection("touristSites")
@@ -35,7 +74,7 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
         .collection("Comments")
         .add({
       "CommentText": commentText,
-      "CommentedBy": currentUser.email,
+      "CommentedBy": currentUser!.email,
       "CommentTime": Timestamp.now(),
     });
   }
@@ -43,6 +82,10 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
   //show a dialog box for adding comment
 
   void showCommentDialog() {
+    if (currentUser == null) {
+      showLoginSnackbar();
+      return;
+    }
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -101,6 +144,12 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
     });
   }
 
+  void handleRatingClick() {
+    if (currentUser == null) {
+      showLoginSnackbarForRating();
+    }
+  }
+
   void showRatingFeedback(double rating) {
     String message;
     if (rating >= 4.5) {
@@ -147,7 +196,6 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Carousel d'images
             Container(
               height: 300.h,
               child: PageView.builder(
@@ -202,14 +250,24 @@ class _CafeDetailScreenState extends State<CafeDetailScreen> {
                     ),
                   ),
                   SizedBox(height: 16.h),
-                  RatingWidget(
-                    initialRating:
-                        0, // Charger cette valeur depuis Firestore si déjà noté
-                    onRatingChanged: (rating) {
-                      updateRating(rating);
-                      showRatingFeedback(
-                          rating); // Afficher le feedback basé sur la note
+                  GestureDetector(
+                    onTap: () {
+                      if (currentUser == null) {
+                        handleRatingClick();
+                      }
                     },
+                    child: AbsorbPointer(
+                      absorbing: currentUser == null,
+                      child: RatingWidget(
+                        initialRating:
+                            0, // Load this value from Firestore if already rated
+                        onRatingChanged: (rating) {
+                          updateRating(rating);
+                          showRatingFeedback(
+                              rating); // Show feedback based on rating
+                        },
+                      ),
+                    ),
                   ),
 
                   Column(

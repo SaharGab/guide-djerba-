@@ -63,6 +63,7 @@ dependencies:
   flutter_cache_manager: ^3.3.1
   flutter_local_notifications: ^17.1.2
   badges: ^3.1.2
+  lottie: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -96,6 +97,7 @@ flutter:
     - images/
     - icons/
     - images/image/
+    - assets/
 
   #   - images/a_dot_ham.jpeg
 

@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:projet_pfe/models/models.dart';
+import 'package:projet_pfe/screens/detailsscreen.dart';
 import 'package:projet_pfe/services/recommendationservice.dart';
 
 class RecommendationsScreen extends StatefulWidget {
@@ -38,15 +40,26 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                       itemCount: eventSnapshot.data!.length,
                       itemBuilder: (context, index) {
                         var doc = eventSnapshot.data![index];
+                        var data = doc.data() as Map<String, dynamic>;
+
+                        // Convert Map<String, dynamic> to DataModel
+                        DataModel currentStory = DataModel.fromFirestore(doc);
+
                         return Card(
                           elevation: 5,
                           child: ListTile(
-                            leading: Image.network(doc['imageUrl'],
+                            leading: Image.network(currentStory.imageUrl,
                                 width: 100.w, height: 100.h, fit: BoxFit.cover),
-                            title: Text(doc['title']),
+                            title: Text(currentStory.title),
                             trailing: Icon(Icons.arrow_forward_ios),
                             onTap: () {
-                              // Add actions on tap, like navigate to a detailed page
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailScreen(dataModel: currentStory),
+                                ),
+                              );
                             },
                           ),
                         );
@@ -54,19 +67,19 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                     );
                   } else {
                     debugPrint("No data available for events");
-                    return CircularProgressIndicator();
+                    return Center(child: Text("No events found"));
                   }
                 } else {
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
                 }
               },
             );
           } else {
             debugPrint("No data available for user preferences");
-            return CircularProgressIndicator();
+            return Center(child: Text("No preferences found"));
           }
         } else {
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         }
       },
     );

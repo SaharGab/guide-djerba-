@@ -73,22 +73,6 @@ class DetailScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 16.sp),
                     ),
                     SizedBox(height: 24.h),
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        // Implémentez la navigation vers la carte ou les détails de l'emplacement
-                      },
-                      icon: Icon(Icons.map),
-                      label: Text(
-                        'View map',
-                        selectionColor: Colors.black,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 50.h.w),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),

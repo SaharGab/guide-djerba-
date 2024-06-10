@@ -50,7 +50,7 @@ class _SplashState extends State<Splash> {
                 child: Text("WanderMate",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.acme(
-                      fontSize: 50.sp,
+                      fontSize: 49.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     )),

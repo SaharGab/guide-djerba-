@@ -9,11 +9,11 @@ import 'package:projet_pfe/models/touristSites.dart';
 import 'package:projet_pfe/screens/accommodationsection.dart';
 import 'package:projet_pfe/screens/autourdemoi.dart';
 import 'package:projet_pfe/screens/caferestaurantsection.dart';
-import 'package:projet_pfe/screens/categorydetailsscreen.dart';
+import 'package:projet_pfe/screens/seeall.dart';
 import 'package:projet_pfe/screens/data_base_service.dart';
 import 'package:projet_pfe/screens/recommendedplans.dart';
+import 'package:projet_pfe/screens/signup.dart';
 import 'package:projet_pfe/screens/storyscreen.dart';
-
 import 'package:projet_pfe/widgets/comment.dart';
 import 'package:projet_pfe/widgets/comment_button.dart';
 import 'package:projet_pfe/widgets/helper_methods.dart';
@@ -358,14 +358,53 @@ class PlaceDetailsScreen extends StatefulWidget {
 
 class _PlaceDetailsScreenState extends State<PlaceDetailsScreen> {
   final _commentTextController = TextEditingController();
+  final User? currentUser = FirebaseAuth.instance.currentUser;
+
   @override
   void initState() {
     super.initState();
   }
 
+  void showLoginSnackbar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Create an account to leave a comment!'),
+        action: SnackBarAction(
+          label: 'Sign Up',
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Signup()),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  void showLoginSnackbarForRating() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Create an account to rate this site!'),
+        action: SnackBarAction(
+          label: 'Sign Up',
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Signup()),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   // add a comment
   void addComment(String commentText) {
-    final email = FirebaseAuth.instance.currentUser!.email;
+    if (currentUser == null) {
+      showLoginSnackbar();
+      return;
+    }
     // write the comment to firestore under the comments collection for this post
     FirebaseFirestore.instance
         .collection("touristSites")
@@ -373,7 +412,7 @@ class _PlaceDetailsScreenState extends State<PlaceDetailsScreen> {
         .collection("Comments")
         .add({
       "CommentText": commentText,
-      "CommentedBy": email,
+      "CommentedBy": currentUser!.email,
       "CommentTime": Timestamp.now(),
     });
   }
@@ -381,6 +420,10 @@ class _PlaceDetailsScreenState extends State<PlaceDetailsScreen> {
   //show a dialog box for adding comment
 
   void showCommentDialog() {
+    if (currentUser == null) {
+      showLoginSnackbar();
+      return;
+    }
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -425,7 +468,7 @@ class _PlaceDetailsScreenState extends State<PlaceDetailsScreen> {
       var cafeSnapshot = await transaction.get(cafeRef);
 
       if (!cafeSnapshot.exists) {
-        throw Exception("Café does not exist!");
+        throw Exception("place does not exist!");
       }
 
       double oldRating = cafeSnapshot.data()?['rating'] ?? 0.0;
@@ -437,6 +480,12 @@ class _PlaceDetailsScreenState extends State<PlaceDetailsScreen> {
       transaction
           .update(cafeRef, {'rating': newAverage, 'ratingCount': newCount});
     });
+  }
+
+  void handleRatingClick() {
+    if (currentUser == null) {
+      showLoginSnackbarForRating();
+    }
   }
 
   void showRatingFeedback(double rating) {
@@ -540,14 +589,24 @@ class _PlaceDetailsScreenState extends State<PlaceDetailsScreen> {
                     ),
                   ),
                   SizedBox(height: 16.h),
-                  RatingWidget(
-                    initialRating:
-                        0, // Charger cette valeur depuis Firestore si déjà noté
-                    onRatingChanged: (rating) {
-                      updateRating(rating);
-                      showRatingFeedback(
-                          rating); // Afficher le feedback basé sur la note
+                  GestureDetector(
+                    onTap: () {
+                      if (currentUser == null) {
+                        handleRatingClick();
+                      }
                     },
+                    child: AbsorbPointer(
+                      absorbing: currentUser == null,
+                      child: RatingWidget(
+                        initialRating:
+                            0, // Load this value from Firestore if already rated
+                        onRatingChanged: (rating) {
+                          updateRating(rating);
+                          showRatingFeedback(
+                              rating); // Show feedback based on rating
+                        },
+                      ),
+                    ),
                   ),
 
                   // View Map Button
